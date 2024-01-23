@@ -6,6 +6,7 @@ import Error from "../Layout/Error/Error";
 import Login from "../Layout/Login/Login";
 import Register from "../Layout/Register/Register";
 import Dashboard from "../DashBoard/Dashboard";
+import AddHomes from "../DashBoard/AddHomes/AddHomes";
 
 
 const router = createBrowserRouter([
@@ -25,21 +26,27 @@ const router = createBrowserRouter([
         loader:({params})=>fetch(`http://localhost:5000/countriesDetails/${params?.id}`)
       },
       {
-        path: "/login",
+        path: "/countriesDetails",
         element: <Login></Login>
       },
       {
         path: "/register",
         element: <Register></Register>
       },
-      {
-        path: "/dashboard",
-        element: <Dashboard></Dashboard>
-      }
-      
-      
     ],
   },
+  {
+    path: "/dashboard",
+    element: <Dashboard></Dashboard>,
+    children: [
+      {
+      
+        path: "/dashboard/addHomes",
+        element: <AddHomes></AddHomes>,
+      
+    }]
+  }
+
 ]);
 
 export default router;
