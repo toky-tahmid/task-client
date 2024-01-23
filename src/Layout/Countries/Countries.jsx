@@ -1,23 +1,168 @@
-import { Link } from "react-router-dom";
-
 /* eslint-disable react/prop-types */
+import { useState, useEffect } from "react";
+
 const Countries = ({ data }) => {
-  console.log(data);
+  const [filteredData, setFilteredData] = useState(data.slice(0, 10)); // Initial display of 10 items
+  // eslint-disable-next-line no-unused-vars
+  const [searchQuery, setSearchQuery] = useState("");
+  const [filters, setFilters] = useState({
+    city: "",
+    bedrooms: "",
+    bathrooms: "",
+    roomSize: "",
+    availabilityDate: "",
+    rent: "",
+  });
+
+  useEffect(() => {
+    // Apply filters when data or filters change
+    applyFilters();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [data, filters]);
+
+  const applyFilters = () => {
+    let filtered = data;
+
+    // Apply search query
+    if (searchQuery) {
+      filtered = filtered.filter((event) =>
+        event.name.toLowerCase().includes(searchQuery.toLowerCase())
+      );
+    }
+
+    // Apply other filters
+    filtered = filtered.filter(
+      (event) =>
+        (!filters.city ||
+          event.city.toLowerCase() === filters.city.toLowerCase()) &&
+        (!filters.bedrooms ||
+          event.bedrooms === parseInt(filters.bedrooms, 10)) &&
+        (!filters.bathrooms ||
+          event.bathrooms === parseInt(filters.bathrooms, 10)) &&
+        (!filters.roomSize ||
+          event.room_size === parseInt(filters.roomSize, 10)) &&
+        (!filters.availabilityDate ||
+          event.availability_date.includes(filters.availabilityDate)) &&
+        (!filters.rent || event.rent_per_month <= parseInt(filters.rent, 10))
+    );
+
+    setFilteredData(filtered.slice(0, 10)); // Update filtered data for display
+  };
+
+  const handleLoadMore = () => {
+    const currentCount = filteredData.length;
+    const newData = data.slice(currentCount, currentCount + 10);
+    setFilteredData((prevData) => [...prevData, ...newData]);
+  };
+
+  const handleInputChange = (filter, value) => {
+    setFilters((prevFilters) => ({ ...prevFilters, [filter]: value }));
+  };
 
   return (
-    <div className="max-w-[1440px] mt-6 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5 mb-6 mx-auto px-2">
-      {data?.map((event, index) => (
-        <div key={index} className="border rounded-2xl shadow">
-          <img src={event.picture} alt={event.title} className="w-full h-48 object-cover mb-2 rounded-t-2xl" />
-          <div className="px-4 pb-6">
-            <h3 className="text-2xl text-center font-semibold mb-2">{event.title}</h3>
-            <p className="text mb-4 overflow-hidden">{event.short_description}</p>
-            <Link to={`/countriesDetails/${event?._id}`}>
-              <button className="bg-[#f7c221] text-base font-semibold rounded-lg px-5 py-2 flex items-center gap-2 md:text-base  text-slate-900  bg-[#f7c221fd] content-glow hover:bg-transparent hover:border-[#f7c221] hover:border hover:duration-700 hover:text-black">Details</button>
-            </Link>
+    <div>
+      <div className="ml-32 mb-4">
+        <input
+         className="p-2 border-2 mr-2 border-blue-500 rounded-md "
+          type="text"
+          placeholder=" city"
+          value={filters.city}
+          onChange={(e) => handleInputChange("city", e.target.value)}
+        />
+        <input
+       className="p-2 border-2 mr-2 border-blue-500 rounded-md "
+          type="text"
+          placeholder="Bedrooms"
+          value={filters.bedrooms}
+          onChange={(e) => handleInputChange("bedrooms", e.target.value)}
+        />
+        <input
+         className="p-2 border-2 mr-2 border-blue-500 rounded-md "
+          type="text"
+          placeholder="Bathrooms"
+          value={filters.bathrooms}
+          onChange={(e) => handleInputChange("bathrooms", e.target.value)}
+        />
+        <input
+         className="p-2 border-2 mr-2 border-blue-500 rounded-md "
+          type="text"
+          placeholder="Room-size"
+          value={filters.roomSize}
+          onChange={(e) => handleInputChange("roomSize", e.target.value)}
+        />
+
+        <input
+         className="p-2 border-2 mr-2 border-blue-500 rounded-md "
+          type="text"
+          placeholder="Year/Month/Day"
+          value={filters.availabilityDate}
+          onChange={(e) =>
+            handleInputChange("availabilityDate", e.target.value)
+          }
+        />
+
+        <input
+         className="p-2 border-2  border-blue-500 rounded-md "
+          type="text"
+          placeholder="Your rent (max)"
+          value={filters.rent}
+          onChange={(e) => handleInputChange("rent", e.target.value)}
+        />
+      </div>
+
+      <div className="max-w-[1440px] mt-6 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5 mb-6 mx-auto px-2">
+        {filteredData.map((event, index) => (
+          <div key={index} className="border rounded-2xl shadow">
+            <img
+              src={event.picture}
+              alt={event.title}
+              className="w-full h-48 object-cover mb-2 rounded-t-2xl"
+            />
+            <div className="px-4 pb-6">
+              <h3 className="text-2xl text-center font-semibold mb-2">
+                {event.name}
+              </h3>
+              <div className="flex justify-evenly">
+                <div>
+                  <p className="text mb-4 overflow-hidden">
+                    City: {event.city}
+                  </p>
+                  <p className="text mb-4 overflow-hidden">
+                    Address: {event.address}
+                  </p>
+                  <p className="text mb-4 overflow-hidden">
+                    Availability_date: {event.availability_date}
+                  </p>
+                </div>
+                <div>
+                  <p className="text mb-4 overflow-hidden">
+                    Bedrooms: {event.bedrooms}
+                  </p>
+                  <p className="text mb-4 overflow-hidden">
+                    Bathrooms: {event.bathrooms}
+                  </p>
+                  <p className="text mb-4 overflow-hidden">
+                    Room_size: {event.room_size}
+                  </p>
+                  <p className="text mb-4 overflow-hidden">
+                    Rent: {event.rent_per_month}
+                  </p>
+                </div>
+              </div>
+            </div>
           </div>
-        </div>
-      ))}
+        ))}
+      </div>
+
+      {/* Load more button for infinite scroll */}
+      {filteredData.length < data.length && (
+        <button
+          onClick={handleLoadMore}
+          className="bg-gray-200 px-4 py-2 rounded-md"
+        >
+          Load More
+        </button>
+      )}
     </div>
   );
 };
