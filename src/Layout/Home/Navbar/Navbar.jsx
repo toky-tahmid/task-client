@@ -13,7 +13,7 @@ const NavBar = () => {
 
     return (
         <>
-            <div className="navbar fixed z-10 bg-opacity-30 w-full bg-gray-200 text-black flex justify-center items-center">
+            <div className="navbar bg-opacity-30 w-full bg-gray-200 text-black flex justify-center items-center">
     <div className="navbar-start">
         <div className="dropdown">
             <label tabIndex={0} className="btn btn-ghost lg:hidden">

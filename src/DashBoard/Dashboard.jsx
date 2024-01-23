@@ -1,26 +1,11 @@
-
 import { NavLink, Outlet, } from "react-router-dom";
 import { RiMenu4Line } from "react-icons/ri";
-
-
 const Dashboard = () => {
-
-
-//   const handleLogOut = async () => {
-//     try {
-//       await logOut();
-//       navigate("/");
-//     } catch (error) {
-//       console.log(error);
-//     }
-//   };
-
   return (
     <section className="bg-white min-h-screen  text-black">
       <label htmlFor="my-drawer-2" className="btn btn-ghost lg:hidden">
         <RiMenu4Line />
       </label>
-
       <div className="lg:drawer-open lg:flex  lg:flex-row-reverse gap-8 mx-auto">
         <input id="my-drawer-2" type="checkbox" className="drawer-toggle" />
         <main className="max-w-[1920px] w-full mx-auto space-y-16 md:space-y-24 lg:space-y-32 xl:space-y-48 lg:flex-[3]">
