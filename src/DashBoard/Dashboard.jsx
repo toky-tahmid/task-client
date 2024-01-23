@@ -52,7 +52,7 @@ const Dashboard = () => {
                   Add Houses
                 </NavLink>
                 <NavLink
-                  to="/dashboard/tasks"
+                  to="/dashboard/allHomes"
                   className={({ isActive, isPending }) =>
                     isPending
                       ? "pending"

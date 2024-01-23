@@ -1,6 +1,9 @@
+import { useLoaderData } from "react-router-dom";
 import Swal from "sweetalert2";
-
-const AddHomes = () => {
+const HomesUpdate = () => {
+    const posted = useLoaderData();
+  console.log(posted);
+  const {_id,description,name,address,phone_number,city,bedrooms,bathrooms, room_size,picture,availability_date,rent_per_month} = posted;
   const handleSubmit = (event) => {
     event.preventDefault();
     const form = event.target;
@@ -15,7 +18,6 @@ const AddHomes = () => {
     const availability_date = form.availability_date.value;
     const rent_per_month = form.rent_per_month.value;
     const description = form.description.value;
-
     const newHome = {
       name,
       address,
@@ -39,8 +41,8 @@ const AddHomes = () => {
       });
       return;
     }
-    fetch("http://localhost:5000/homes", {
-      method: "POST",
+    fetch(`http://localhost:5000/homeUpdated/${_id}`, {
+      method: "PUT",
       headers: {
         "content-type": "application/json",
       },
@@ -63,7 +65,7 @@ const AddHomes = () => {
           });
           Toast.fire({
             icon: "success",
-            title: "Home Added Successfully",
+            title: "Home Updated Successfully",
           });
         }
       });
@@ -84,6 +86,7 @@ const AddHomes = () => {
             <input
               type="text"
               name="name"
+              defaultValue={name}
               className="mt-1 p-2 w-full border rounded-md"
             />
           </div>
@@ -97,6 +100,7 @@ const AddHomes = () => {
             </label>
             <input
               type="text"
+              defaultValue={address}
               name="address"
               className="mt-1 p-2 w-full border rounded-md"
             />
@@ -111,6 +115,7 @@ const AddHomes = () => {
             </label>
             <input
               type="text"
+              defaultValue={city}
               name="city"
               className="mt-1 p-2 w-full border rounded-md"
             />
@@ -124,6 +129,7 @@ const AddHomes = () => {
             </label>
             <input
               type="text"
+              defaultValue={picture}
               name="picture"
               className="mt-1 p-2 w-full border rounded-md"
             />
@@ -137,6 +143,7 @@ const AddHomes = () => {
             </label>
             <input
               type="text"
+              defaultValue={bedrooms}
               name="bedrooms"
               className="mt-1 p-2 w-full border rounded-md"
             />
@@ -150,6 +157,7 @@ const AddHomes = () => {
             </label>
             <input
               type="text"
+              defaultValue={room_size}
               name="room_size"
               className="mt-1 p-2 w-full border rounded-md"
             />
@@ -163,6 +171,7 @@ const AddHomes = () => {
             </label>
             <input
               type="date"
+              defaultValue={availability_date}
               name="availability_date"
               className="mt-1 p-2 w-full border rounded-md"
             />
@@ -177,6 +186,7 @@ const AddHomes = () => {
             </label>
             <input
               type="text"
+              defaultValue={rent_per_month}
               name="rent_per_month"
               className="mt-1 p-2 w-full border rounded-md"
             />
@@ -192,6 +202,7 @@ const AddHomes = () => {
             </label>
             <input
               type="text"
+              defaultValue={bathrooms}
               name="bathrooms"
               className="mt-1 p-2 w-full border rounded-md"
             />
@@ -205,6 +216,7 @@ const AddHomes = () => {
             </label>
             <input
               type="text"
+              defaultValue={phone_number}
               name="phone_number"
               className="mt-1 p-2 w-full border rounded-md"
             />
@@ -218,6 +230,7 @@ const AddHomes = () => {
             </label>
             <textarea
               name="description"
+              defaultValue={description}
               className="mt-1 p-2 w-full border rounded-md"
             />
           </div>
@@ -233,5 +246,4 @@ const AddHomes = () => {
     </>
   );
 };
-
-export default AddHomes;
+export default HomesUpdate;

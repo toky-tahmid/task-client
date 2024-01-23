@@ -1,7 +1,7 @@
 /* eslint-disable react/prop-types */
 import { useState, useEffect } from "react";
 
-const Countries = ({ data }) => {
+const Houses = ({ data }) => {
   const [filteredData, setFilteredData] = useState(data.slice(0, 10)); // Initial display of 10 items
   // eslint-disable-next-line no-unused-vars
   const [searchQuery, setSearchQuery] = useState("");
@@ -15,7 +15,6 @@ const Countries = ({ data }) => {
   });
 
   useEffect(() => {
-    // Apply filters when data or filters change
     applyFilters();
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [data, filters]);
@@ -167,4 +166,4 @@ const Countries = ({ data }) => {
   );
 };
 
-export default Countries;
+export default Houses;

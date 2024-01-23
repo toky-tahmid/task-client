@@ -1,7 +1,7 @@
 import { useLoaderData } from "react-router-dom";
 import Banner from "./Banner/Banner";
 import Contact from "./Contact/Contact";
-import Countries from "../Countries/Countries";
+import Houses from "../Houses/Houses";
 
 
 const Home = () => {
@@ -12,7 +12,7 @@ const Home = () => {
             <Banner></Banner>
             <br />
             <br />
-           <Countries data={data}></Countries>
+           <Houses data={data}></Houses>
         
            <Contact></Contact>
           
