@@ -1,32 +1,41 @@
+/* eslint-disable react/no-unescaped-entities */
 import { Link, useLocation, useNavigate } from "react-router-dom";
+import Swal from "sweetalert2";
+import { useUser } from "../../UserContext/UserContext";
+
 const Login = () => {
+  const { login } = useUser();
+  const Location = useLocation();
+  const navigation = useNavigate();
 
-    const Location = useLocation();
+  const navigate = () => {
+    console.log(Location.state);
+    navigation(Location?.state ? Location.state : "/dashboard");
+  };
+  const handleLogin = (e) => {
+    e.preventDefault();
+    const form = e.target;
+    const email = form.email.value;
+    const pass = form.pass.value;
+    fetch(`https://task-pro-server-psi.vercel.app/api/v1/users?email=${email}`)
+      .then((res) => res.json())
+      .then((data) => {
+        console.log(data);
 
-    const navigation = useNavigate();
-
-    const navigate = () => {
-        console.log(Location.state);
-         navigation(Location?.state ? Location.state : "/" )
-    }
-    const handleLogin = e => {
-        e.preventDefault()
-        const form = e.target;
-        const email = form.email.value;
-        const pass = form.pass.value;
-        fetch(`http://localhost:5000/api/v1/users?email=${email}`,)
-            .then(res => res.json())
-            .then(data => {
-                console.log(data);
-                if (data.message === 'not found') {
-                    console.log('user not found. you should register an account');
-                    return;
-                }
-                if( data?.pass === pass) {
-                    navigate()
-                }
-            })
-    }
+        if (data?.message === 'not found') {
+            Swal.fire({
+              icon: 'warning',
+              title: 'User not found',
+              text: 'You should register an account.',
+            });
+            return;
+          }
+          if (data?.password === pass) {
+            login(data); 
+            navigate();
+          }
+      });
+  };
     return (
         <>
             <section className="flex flex-col md:flex-row items-center justify-center min-h-screen">

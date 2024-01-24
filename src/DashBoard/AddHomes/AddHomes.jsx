@@ -39,7 +39,7 @@ const AddHomes = () => {
       });
       return;
     }
-    fetch("http://localhost:5000/homes", {
+    fetch("https://task-pro-server-psi.vercel.app/homes", {
       method: "POST",
       headers: {
         "content-type": "application/json",

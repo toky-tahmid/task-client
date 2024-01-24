@@ -1,7 +1,6 @@
 import { createBrowserRouter } from "react-router-dom";
 import Main from "../Layout/Main";
 import Home from "../Layout/Home/Home";
-import CountriesDetails from "../Layout/Houses/CountriesDetails";
 import Error from "../Layout/Error/Error";
 import Login from "../Layout/Login/Login";
 import Register from "../Layout/Register/Register";
@@ -9,6 +8,7 @@ import Dashboard from "../DashBoard/Dashboard";
 import AddHomes from "../DashBoard/AddHomes/AddHomes";
 import AllHomes from "../DashBoard/AllHomes/AllHomes";
 import HomesUpdate from "../DashBoard/AllHomes/HomesUpdate";
+import HousesDetails from "../Layout/Houses/HousesDetails";
 
 
 const router = createBrowserRouter([
@@ -20,13 +20,15 @@ const router = createBrowserRouter([
       {
         path: "/",
         element: <Home></Home>,
-        loader: () => fetch("http://localhost:5000/allData")
+        loader: () => fetch("https://task-pro-server-psi.vercel.app/allData")
       },
       {
-        path: "/countriesDetails/:id",
-        element: <CountriesDetails></CountriesDetails>,
-        loader:({params})=>fetch(`http://localhost:5000/countriesDetails/${params?.id}`)
+        path: "/houseDetails/:id",
+        element: <HousesDetails></HousesDetails>,
+        loader:({params})=>fetch(`https://task-pro-server-psi.vercel.app/allData/${params?.id}`)
+        
       },
+      
       {
         path: "/login",
         element: <Login></Login>
@@ -51,15 +53,15 @@ const router = createBrowserRouter([
       
         path: "/dashboard/allHomes",
         element: <AllHomes></AllHomes>,
-        // loader: () => fetch("http://localhost:5000/allData")
+        // loader: () => fetch("https://task-pro-server-psi.vercel.app/allData")
       
     },
       {
       
         path: "/dashboard/homeUpdated/:id",
         element: <HomesUpdate></HomesUpdate>,
-        // loader: () => fetch("http://localhost:5000/allData")
-        loader:({ params })=>fetch(`http://localhost:5000/allData/${params?.id}`)
+        // loader: () => fetch("https://task-pro-server-psi.vercel.app/allData")
+        loader:({ params })=>fetch(`https://task-pro-server-psi.vercel.app/allData/${params?.id}`)
       
     },
 

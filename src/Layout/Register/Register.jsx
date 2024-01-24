@@ -1,5 +1,9 @@
+/* eslint-disable react/no-unescaped-entities */
 import { Link } from "react-router-dom";
+import Swal from "sweetalert2";
+import { useUser } from "../../UserContext/UserContext";
 const Register = () => {
+    const { login } = useUser();
     const handleRegister = e => {
         e.preventDefault()
         const form = e.target;
@@ -11,7 +15,7 @@ const Register = () => {
         const user = {
             email, pass, role, number, name
         }
-        fetch('http://localhost:5000/api/v1/users', {
+        fetch('https://task-pro-server-psi.vercel.app/api/v1/users', {
             method: "POST",
             headers: {
                 'content-type': 'application/json'
@@ -20,9 +24,18 @@ const Register = () => {
         })
         .then(res => res.json())
         .then(data => {
-            console.log(data.message);
+            Swal.fire({
+                icon: 'warning',
+                title: 'old User found',
+                text: 'User already exists',
+            });
             if(data.insertedId){
-                console.log('user created successfully');
+                Swal.fire({
+                    icon: 'warning',
+                    title: 'New User found',
+                    text: 'User Registered',
+                });
+                login(user);
             }
         })
     }
@@ -35,8 +48,8 @@ const Register = () => {
                 <div className="flex-1">
                     <div className="w-9/12 md:w-11/12 lg:w-9/12 xl:w-7/12 mx-auto text-center space-y-3 md:space-y-5 lg:space-y-3">
                         <h4 className="text-sm md:text-base lg:text-lg font-bold text-design">R E G I S T E R</h4>
-                        <h1 className="text-[20px] md:text-[30px] lg:text-[40px] xl:text-[48px] leading-tight font-bold">Join Our Job <span className="text-design">Network</span></h1>
-                        <p className="text-[12px] md:text-[14px] lg:text-[16px] leading-5 md:leading-7 lg:leading-8 font-medium ">Unlock a World of Opportunities – Sign Up for Your JOB CRACKER Account Today! Job Seekers and Employers, Get Started Here.</p>
+                        <h1 className="text-[20px] md:text-[30px] lg:text-[40px] xl:text-[48px] leading-tight font-bold">Join Our House Hunter <span className="text-design">Network</span></h1>
+                        <p className="text-[12px] md:text-[14px] lg:text-[16px] leading-5 md:leading-7 lg:leading-8 font-medium ">Unlock a World of Opportunities – Sign Up for Your House Hunter Account Today!</p>
                     </div>
                     <div className="card-body w-11/12 md:w-full lg:w-10/12 xl:w-9/12 mx-auto">
                         <form onSubmit={handleRegister} >

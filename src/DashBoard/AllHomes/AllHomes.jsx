@@ -3,15 +3,15 @@ import { Link } from "react-router-dom";
 import Swal from "sweetalert2";
 
 const AllHomes = () => {
-    const [postedJobs, setPostedJobs] = useState([]);
+    const [allHomes, setAllHomes] = useState([]);
 
-  const fetchJobs = () => {
-    fetch('http://localhost:5000/allData')
+  const fetchHomes = () => {
+    fetch('https://task-pro-server-psi.vercel.app/allData')
       .then((res) => res.json())
-      .then((data) => setPostedJobs(data));
+      .then((data) => setAllHomes(data));
   };
   useEffect(() => {
-    fetchJobs();
+    fetchHomes();
   }, []);
   const handleDelete = (_id) => {
     Swal.fire({
@@ -24,7 +24,7 @@ const AllHomes = () => {
       confirmButtonText: "Yes, delete it!",
     }).then((result) => {
       if (result.isConfirmed) {
-        fetch(`http://localhost:5000/home/${_id}`, {
+        fetch(`https://task-pro-server-psi.vercel.app/home/${_id}`, {
           method: "DELETE",
         })
           .then((res) => res.json())
@@ -32,7 +32,7 @@ const AllHomes = () => {
             console.log(data);
             if (data.deletedCount > 0) {
               Swal.fire("Deleted!", "Your Job has been deleted.", "success");
-              fetchJobs();
+              fetchHomes();
             }
           });
       }
@@ -42,24 +42,25 @@ const AllHomes = () => {
         <div>
       
       <div className="grid-col-1 lg:grid grid-cols-2 gap-3 ml-20">
-        {postedJobs.map((postedJob) => (
+        {allHomes.map((postedJob) => (
           <div key={postedJob._id} className="mb-8">
             <div className="relative flex justify-evenly max-w-xl flex-row rounded-xl bg-white bg-clip-border text-gray-700 shadow-md">
               <div className="p-6">
                 <h5 className="block mb-2 text-2xl text-center antialiased font-bold leading-snug tracking-normal text-gray-900 bg-gradient-to-r from-purple-500 to-red-400 text-transparent bg-clip-text">
-                  Title: 
+                  Name: 
                   {postedJob.name}
                 </h5>
                 <h5 className="text-xl text-center antialiased font-semibold">
-                  DeadLine:{postedJob.deadline}
+                city:{postedJob.city}
                 </h5>
                 <h5 className="text-xl  text-center antialiased font-semibold">
-                  Price-Range : <span>{postedJob.minimumPrice}</span> -{" "}
-                  <span>{postedJob.maximumPrice}</span>
+                room_size :{postedJob.room_size}Sqaure Fit
                 </h5>
-                <p className="block font-sans text-base antialiased font-light leading-relaxed text-inherit">
-                  {postedJob.description}
-                </p>
+                <h5 className="text-xl  text-center antialiased font-semibold">
+                rent_per_month :
+                 {postedJob.rent_per_month}
+                </h5>
+                
               </div>
               <div className="flex my-auto">
                 <Link to={`/dashboard/homeUpdated/${postedJob._id}`}>

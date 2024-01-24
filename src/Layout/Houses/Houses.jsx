@@ -1,8 +1,9 @@
 /* eslint-disable react/prop-types */
 import { useState, useEffect } from "react";
+import { Link } from "react-router-dom";
 
 const Houses = ({ data }) => {
-  const [filteredData, setFilteredData] = useState(data.slice(0, 10)); // Initial display of 10 items
+  const [filteredData, setFilteredData] = useState(data.slice(0, 10)); // 
   // eslint-disable-next-line no-unused-vars
   const [searchQuery, setSearchQuery] = useState("");
   const [filters, setFilters] = useState({
@@ -13,6 +14,7 @@ const Houses = ({ data }) => {
     availabilityDate: "",
     rent: "",
   });
+  
 
   useEffect(() => {
     applyFilters();
@@ -62,28 +64,28 @@ const Houses = ({ data }) => {
     <div>
       <div className="ml-32 mb-4">
         <input
-         className="p-2 border-2 mr-2 border-blue-500 rounded-md "
+          className="p-2 border-2 mr-2 border-blue-500 rounded-md "
           type="text"
           placeholder=" city"
           value={filters.city}
           onChange={(e) => handleInputChange("city", e.target.value)}
         />
         <input
-       className="p-2 border-2 mr-2 border-blue-500 rounded-md "
+          className="p-2 border-2 mr-2 border-blue-500 rounded-md "
           type="text"
           placeholder="Bedrooms"
           value={filters.bedrooms}
           onChange={(e) => handleInputChange("bedrooms", e.target.value)}
         />
         <input
-         className="p-2 border-2 mr-2 border-blue-500 rounded-md "
+          className="p-2 border-2 mr-2 border-blue-500 rounded-md "
           type="text"
           placeholder="Bathrooms"
           value={filters.bathrooms}
           onChange={(e) => handleInputChange("bathrooms", e.target.value)}
         />
         <input
-         className="p-2 border-2 mr-2 border-blue-500 rounded-md "
+          className="p-2 border-2 mr-2 border-blue-500 rounded-md "
           type="text"
           placeholder="Room-size"
           value={filters.roomSize}
@@ -91,7 +93,7 @@ const Houses = ({ data }) => {
         />
 
         <input
-         className="p-2 border-2 mr-2 border-blue-500 rounded-md "
+          className="p-2 border-2 mr-2 border-blue-500 rounded-md "
           type="text"
           placeholder="Year/Month/Day"
           value={filters.availabilityDate}
@@ -101,7 +103,7 @@ const Houses = ({ data }) => {
         />
 
         <input
-         className="p-2 border-2  border-blue-500 rounded-md "
+          className="p-2 border-2  border-blue-500 rounded-md "
           type="text"
           placeholder="Your rent (max)"
           value={filters.rent}
@@ -111,7 +113,7 @@ const Houses = ({ data }) => {
 
       <div className="max-w-[1440px] mt-6 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5 mb-6 mx-auto px-2">
         {filteredData.map((event, index) => (
-          <div key={index} className="border rounded-2xl shadow">
+          <div key={index} className="border border-orange-500 rounded-2xl shadow">
             <img
               src={event.picture}
               alt={event.title}
@@ -148,16 +150,21 @@ const Houses = ({ data }) => {
                   </p>
                 </div>
               </div>
+              <Link to={`/houseDetails/${event?._id}`}>
+              <button
+                className="text-sm mx-auto flex items-center gap-2 md:text-base inter rounded py-3 px-20 text-white font-bold bg-[#00E5F7] content-glow hover:bg-transparent hover:border-[#00E5F7] hover:border hover:duration-1000 hover:text-[#00E5F7]"
+              >
+                Rent
+              </button>
+              </Link>
             </div>
           </div>
         ))}
       </div>
-
-      {/* Load more button for infinite scroll */}
       {filteredData.length < data.length && (
         <button
           onClick={handleLoadMore}
-          className="bg-gray-200 px-4 py-2 rounded-md"
+          className="text-sm mx-auto flex items-center gap-2 md:text-base inter rounded py-3 px-20 text-white font-bold bg-[#00E5F7] content-glow hover:bg-transparent hover:border-[#00E5F7] hover:border hover:duration-1000 hover:text-[#00E5F7]"
         >
           Load More
         </button>

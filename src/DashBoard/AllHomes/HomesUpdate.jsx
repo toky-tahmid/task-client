@@ -41,7 +41,7 @@ const HomesUpdate = () => {
       });
       return;
     }
-    fetch(`http://localhost:5000/homeUpdated/${_id}`, {
+    fetch(`https://task-pro-server-psi.vercel.app/homeUpdated/${_id}`, {
       method: "PUT",
       headers: {
         "content-type": "application/json",
